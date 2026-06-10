@@ -1,6 +1,7 @@
+
 # 2D grid benchmark
 
-This benchmark runs independent 3 Gb simulation replicates and evaluates DAIseg across a grid of reference-panel sizes.
+This benchmark runs independent whole-genome-scale simulations. Each seed simulates 60 chromosomes of 50 Mb, giving 3 Gb of sequence per replicate.
 
 ## Main pipeline
 
@@ -55,4 +56,5 @@ Outputs are written to:
 ```text
 length_bin_analysis.ref250.nd3
 ```
+
 
