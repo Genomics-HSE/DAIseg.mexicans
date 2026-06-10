@@ -1,42 +1,59 @@
-# 2D grid
+# 2D grid benchmark
 
-`launch.2d.daiseg.sh` runs multiple independent simulation replicates. For each seed, it sets `SIM_NAME=2d.daiseg.seedN` and `BASE_SEED`, then launches `2d.daiseg.sh`, writing the log to `seedN.log`.
+This benchmark runs independent 3 Gb simulation replicates and evaluates DAIseg across a grid of reference-panel sizes.
 
-`2d.daiseg.sh` runs the full pipeline for one seed: simulates a 3 Gb dataset, prepares DAIseg inputs for each `(modern_ref, nd_ref)` grid point, runs DAIseg, evaluates predictions, and writes per-seed metrics to:
+## Main pipeline
 
-`2d.daiseg.seedN/metrics/daiseg_mexicans/grid_metrics.long.tsv`
+`launch.2d.daiseg.sh` runs multiple seeds. For each seed, it sets `SIM_NAME=2d.daiseg.seedN` and `BASE_SEED`, then launches `2d.daiseg.sh`.
 
-Each `2d.daiseg.seedN` directory corresponds to one independent whole-genome-scale simulation replicate. In the full run, there are 50 replicates, each with 60 chromosomes of 50 Mb.
+`2d.daiseg.sh` runs the full per-seed pipeline: simulation, DAIseg input preparation, DAIseg inference, and evaluation for each `(modern_ref, nd_ref)` grid point.
 
-`collect.2d.runs.py` searches the current directory for completed seed folders matching:
+Per-seed metrics are written to:
 
-`2d.daiseg.seed*/metrics/daiseg_mexicans/grid_metrics.long.tsv`
+```text
+2d.daiseg.seedN/metrics/daiseg_mexicans/grid_metrics.long.tsv
+````
 
-It parses these per-seed metric files, adds the seed number, combines them into:
+## Grid summary
 
-`all_runs.long.tsv`
+`collect.2d.runs.py` searches for:
 
-Then it averages precision and recall across seeds for each `(state, modern_ref, nd_ref)` combination and produces the final figures:
+```text
+2d.daiseg.seed*/metrics/daiseg_mexicans/grid_metrics.long.tsv
+```
 
-`archaic.tileplot.pdf`  
-`modern.tileplot.pdf`
+It combines available seed results into `all_runs.long.tsv`, averages precision and recall across seeds, and produces:
 
-`eval_len_bin.py` uses the same `2d.daiseg.seedN` folders, but performs a separate length-stratified analysis for one grid point:
+```text
+archaic.tileplot.pdf
+modern.tileplot.pdf
+```
 
-`ref.eu250.na250.af250.nd3`
+## Length-bin analysis
 
-For each available seed, it reads the truth file:
+`eval_len_bin.py` uses the same `2d.daiseg.seedN` folders, but analyzes one grid point:
 
-`2d.daiseg.seedN/raw/truth.all.tsv`
+```text
+ref.eu250.na250.af250.nd3
+```
 
-and the corresponding DAIseg prediction file:
+For each seed, it compares:
 
-`2d.daiseg.seedN/runs/daiseg_mexicans/ref.eu250.na250.af250.nd3/all.inferred.daiseg_mexicans.em.tsv`
+```text
+2d.daiseg.seedN/raw/truth.all.tsv
+```
 
-It groups true tracts by length bins, compares true and inferred ancestry states by overlapping base pairs, and computes 5-state and binary archaic/non-archaic confusion matrices.
+with:
 
-The results are written to:
+```text
+2d.daiseg.seedN/runs/daiseg_mexicans/ref.eu250.na250.af250.nd3/all.inferred.daiseg_mexicans.em.tsv
+```
 
-`length_bin_analysis.ref250.nd3`
+It groups true tracts by length bin and computes 5-state and archaic/non-archaic confusion matrices.
 
-including `length_bin_summary.json`, `length_bin_confusion.mean_across_runs.pdf`, and per-bin confusion matrix text files.
+Outputs are written to:
+
+```text
+length_bin_analysis.ref250.nd3
+```
+
