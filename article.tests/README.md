@@ -25,17 +25,32 @@ The analysis has three parts: grid-level performance across `(modern_ref, nd_ref
 ```text
 launch.2d.daiseg.sh
 └── 2d.daiseg.sh
+    ├── simulate_mexicans.py
+    ├── prepare_daiseg_mexicans.py
+    ├── run_daiseg_mexicans.py
+    ├── evaluate_methods.py
     └── 2d.daiseg.seedN/
         ├── raw/truth.all.tsv
         ├── runs/daiseg_mexicans/ref.eu*.na*.af*.nd*/all.inferred.daiseg_mexicans.em.tsv
-        └── metrics/daiseg_mexicans/grid_metrics.long.tsv
+        └── metrics/daiseg_mexicans/
+            ├── summary.ref.eu*.na*.af*.nd*.json
+            └── grid_metrics.long.tsv
 
 collect.2d.runs.py
-└── grid_metrics.long.tsv → all_runs.long.tsv → archaic.tileplot.pdf, modern.tileplot.pdf
+├── reads  → 2d.daiseg.seed*/metrics/daiseg_mexicans/grid_metrics.long.tsv
+└── writes → all_runs.long.tsv
+          → archaic.tileplot.pdf
+          → modern.tileplot.pdf
 
 analysis_utils.py
-├── plot.confusion.py → confusion.selected.grid.pdf
-└── eval_len_bin.py → length_bin_analysis.ref250.nd3/length_bin_confusion.mean_across_runs.pdf
+├── plot.confusion.py
+│   ├── reads  → 2d.daiseg.seedN/raw/truth.all.tsv
+│   ├── reads  → 2d.daiseg.seedN/runs/daiseg_mexicans/ref.eu{25,100,250}.na{25,100,250}.af{25,100,250}.nd{0,1,3}/all.inferred.daiseg_mexicans.em.tsv
+│   └── writes → confusion.selected.grid.pdf
+└── eval_len_bin.py
+    ├── reads  → 2d.daiseg.seedN/raw/truth.all.tsv
+    ├── reads  → 2d.daiseg.seedN/runs/daiseg_mexicans/ref.eu250.na250.af250.nd3/all.inferred.daiseg_mexicans.em.tsv
+    └── writes → length_bin_analysis.ref250.nd3/length_bin_confusion.mean_across_runs.pdf
 ```
 
 # Three-method comparison benchmark
