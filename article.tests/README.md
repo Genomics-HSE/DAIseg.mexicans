@@ -84,10 +84,11 @@ test.3.methods.sh
                 └── summary.ref.eu*.na*.af*.nd*.json
 ```
 
-Main outputs
+## Main outputs
 
-test.3.methods.sh prints final accuracy summaries for all evaluated methods.
-
+test.3.methods.sh prints final accuracy summaries for all evaluated methods. 
 The detailed evaluation files are written under:
 
+```text
 comparison.3.methods/metrics/
+```
