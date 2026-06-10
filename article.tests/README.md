@@ -2,89 +2,37 @@
 
 ## Goals
 
-This benchmark evaluates DAIseg on independent whole-genome-scale simulations.
+This benchmark evaluates DAIseg on independent whole-genome-scale simulations. Each seed simulates 60 chromosomes of 50 Mb, giving 3 Gb of sequence per replicate.
 
-Each seed simulates 60 chromosomes of 50 Mb, giving 3 Gb of sequence per replicate.
+The analysis has three parts: grid-level performance across `(modern_ref, nd_ref)`, selected 5-state confusion matrices, and performance by true tract length.
 
-The analysis has three parts:
+## Scripts
 
-1. test how performance changes across the `(modern_ref, nd_ref)` grid;
-2. inspect 5-state confusion matrices for selected grid points;
-3. test whether performance depends on the length of the true tract.
+`launch.2d.daiseg.sh` runs multiple simulation seeds by setting `SIM_NAME=2d.daiseg.seedN` and `BASE_SEED`, then launching `2d.daiseg.sh`.
 
-## Scripts and file flow
+`2d.daiseg.sh` runs the full per-seed pipeline: simulation, DAIseg input preparation, inference, evaluation, and per-seed metric collection.
 
-### `launch.2d.daiseg.sh`
+`collect.2d.runs.py` combines completed per-seed grid metrics and produces the main grid summary plots.
 
-Runs multiple simulation seeds.
+`analysis_utils.py` contains shared loading, formatting, and confusion-matrix functions used by `plot.confusion.py` and `eval_len_bin.py`.
 
-For each seed, it sets `SIM_NAME=2d.daiseg.seedN` and `BASE_SEED`, then launches:
+`plot.confusion.py` builds row-normalized 5-state confusion matrices for selected grid points.
 
-`launch.2d.daiseg.sh` → `2d.daiseg.sh`
+`eval_len_bin.py` runs length-stratified analysis for `ref.eu250.na250.af250.nd3` to test whether performance depends on true tract length.
 
-### `2d.daiseg.sh`
+## File dependency tree
 
-Runs the full pipeline for one seed:
+```text
+launch.2d.daiseg.sh
+└── 2d.daiseg.sh
+    └── 2d.daiseg.seedN/
+        ├── raw/truth.all.tsv
+        ├── runs/daiseg_mexicans/ref.eu*.na*.af*.nd*/all.inferred.daiseg_mexicans.em.tsv
+        └── metrics/daiseg_mexicans/grid_metrics.long.tsv
 
-`simulate data` → `prepare DAIseg inputs` → `run DAIseg` → `evaluate predictions` → `collect per-seed grid metrics`
+collect.2d.runs.py
+└── grid_metrics.long.tsv → all_runs.long.tsv → archaic.tileplot.pdf, modern.tileplot.pdf
 
-Main output:
-
-`2d.daiseg.sh` → `2d.daiseg.seedN/metrics/daiseg_mexicans/grid_metrics.long.tsv`
-
-### `collect.2d.runs.py`
-
-Combines grid metrics across completed seeds:
-
-`2d.daiseg.seed*/metrics/daiseg_mexicans/grid_metrics.long.tsv` → `all_runs.long.tsv`
-
-Then writes:
-
-`collect.2d.runs.py` → `archaic.tileplot.pdf`  
-`collect.2d.runs.py` → `modern.tileplot.pdf`
-
-### `analysis_utils.py`
-
-Contains shared loading, formatting, and confusion-matrix functions used by:
-
-`analysis_utils.py` → `plot.confusion.py`  
-`analysis_utils.py` → `eval_len_bin.py`
-
-### `plot.confusion.py`
-
-Builds row-normalized 5-state confusion matrices for selected grid points:
-
-`modern_ref = 25, 100, 250`  
-`nd_ref = 0, 1, 3`
-
-For each seed, it compares:
-
-`2d.daiseg.seedN/raw/truth.all.tsv`
-
-with:
-
-`2d.daiseg.seedN/runs/daiseg_mexicans/ref.eu{modern_ref}.na{modern_ref}.af{modern_ref}.nd{nd_ref}/all.inferred.daiseg_mexicans.em.tsv`
-
-Main output:
-
-`plot.confusion.py` → `confusion.selected.grid.pdf`
-
-### `eval_len_bin.py`
-
-Runs length-stratified analysis for one grid point:
-
-`ref.eu250.na250.af250.nd3`
-
-For each seed, it compares:
-
-`2d.daiseg.seedN/raw/truth.all.tsv`
-
-with:
-
-`2d.daiseg.seedN/runs/daiseg_mexicans/ref.eu250.na250.af250.nd3/all.inferred.daiseg_mexicans.em.tsv`
-
-The goal is to evaluate performance by true tract length.
-
-Main output:
-
-`eval_len_bin.py` → `length_bin_analysis.ref250.nd3/length_bin_confusion.mean_across_runs.pdf`
+analysis_utils.py
+├── plot.confusion.py → confusion.selected.grid.pdf
+└── eval_len_bin.py → length_bin_analysis.ref250.nd3/length_bin_confusion.mean_across_runs.pdf
