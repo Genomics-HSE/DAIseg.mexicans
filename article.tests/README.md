@@ -49,9 +49,8 @@ with:
 2d.daiseg.seedN/runs/daiseg_mexicans/ref.eu250.na250.af250.nd3/all.inferred.daiseg_mexicans.em.tsv
 ```
 
-It groups true tracts by length bin and computes 5-state and archaic/non-archaic confusion matrices.
-
-Outputs are written to:
+It groups true tracts by length bin and computes 5-state and archaic/non-archaic confusion matrices. 
+Outputs are written to folder:
 
 ```text
 length_bin_analysis.ref250.nd3
