@@ -82,6 +82,7 @@ test.3.methods.sh
             │   └── summary.rfmix.eu*.na*.af*__simple.af*.nd*.json
             └── daiseg_mexicans/
                 └── summary.ref.eu*.na*.af*.nd*.json
+```
 
 Main outputs
 
