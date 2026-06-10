@@ -76,28 +76,14 @@ test.3.methods.sh
 ├── combine_predictions.py
 └── evaluate_methods.py
 
+
 outputs:
 
-simulate_mexicans.py
-→ comparison.3.methods/raw/truth.all.tsv
-
-run_rfmix.py
-→ comparison.3.methods/runs/rfmix/
-
-run_hmmix.py
-→ comparison.3.methods/runs/hmmix/
-
-combine_predictions.py rfmix_hmmix
-→ comparison.3.methods/runs/rfmix_hmmix/
-
-combine_predictions.py rfmix_daiseg_simple
-→ comparison.3.methods/runs/rfmix_daiseg_simple/
-
-run_daiseg_mexicans.py
-→ comparison.3.methods/runs/daiseg_mexicans/
-
-evaluate_methods.py
-→ comparison.3.methods/metrics/rfmix_hmmix/
-→ comparison.3.methods/metrics/rfmix_daiseg_simple/
-→ comparison.3.methods/metrics/daiseg_mexicans/
+simulate_mexicans.py → comparison.3.methods/raw/truth.all.tsv
+run_rfmix.py → comparison.3.methods/runs/rfmix/
+run_hmmix.py → comparison.3.methods/runs/hmmix/
+combine_predictions.py rfmix_hmmix → comparison.3.methods/runs/rfmix_hmmix/
+combine_predictions.py rfmix_daiseg_simple → comparison.3.methods/runs/rfmix_daiseg_simple/
+run_daiseg_mexicans.py → comparison.3.methods/runs/daiseg_mexicans/
+evaluate_methods.py → comparison.3.methods/metrics/{rfmix_hmmix,rfmix_daiseg_simple,daiseg_mexicans}/
 ```
