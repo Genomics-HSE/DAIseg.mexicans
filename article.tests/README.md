@@ -64,3 +64,22 @@ Additional outputs:
 
 `eval_len_bin.py` → `length_bin_analysis.ref250.nd3/length_bin_summary.json`  
 `eval_len_bin.py` → `length_bin_analysis.ref250.nd3/mean_confusion_*.txt`
+
+### `plot.confusion.py`
+
+Builds 5-state confusion matrices for selected grid points:
+
+`modern_ref = 25, 100, 250`  
+`nd_ref = 0, 1, 3`
+
+For each seed, it compares:
+
+`2d.daiseg.seedN/raw/truth.all.tsv`
+
+with the corresponding DAIseg prediction file:
+
+`2d.daiseg.seedN/runs/daiseg_mexicans/ref.eu{modern_ref}.na{modern_ref}.af{modern_ref}.nd{nd_ref}/all.inferred.daiseg_mexicans.em.tsv`
+
+The script aggregates confusion counts across available seeds and writes:
+
+`plot.confusion.py` → `confusion.selected.grid.pdf`
