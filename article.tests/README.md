@@ -87,3 +87,30 @@ combine_predictions.py rfmix_daiseg_simple → comparison.3.methods/runs/rfmix_d
 run_daiseg_mexicans.py → comparison.3.methods/runs/daiseg_mexicans/
 evaluate_methods.py → comparison.3.methods/metrics/{rfmix_hmmix,rfmix_daiseg_simple,daiseg_mexicans}/
 ```
+
+
+# Minimal DAIseg.mexicans test run
+
+## Goal
+
+This script runs a reduced DAIseg.mexicans test pipeline to check that simulation, inference, and evaluation work end-to-end.
+
+## Script
+
+`simpl.sims.sh` simulates a smaller dataset, prepares DAIseg.mexicans inputs, runs DAIseg, and evaluates the prediction.
+
+By default, it simulates 20 chromosomes of 30 Mb each, giving 600 Mb of sequence.
+
+## File flow
+
+```text
+simpl.sims.sh
+├── simulate_mexicans.py
+├── prepare_daiseg_mexicans.py
+├── run_daiseg_mexicans.py
+└── evaluate_methods.py
+
+simulate_mexicans.py → test.em/raw/truth.all.tsv
+run_daiseg_mexicans.py → test.em/runs/daiseg_mexicans/
+evaluate_methods.py → test.em/metrics/daiseg_mexicans/
+```
