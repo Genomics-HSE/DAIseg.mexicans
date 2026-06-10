@@ -6,8 +6,7 @@ This benchmark runs independent 3 Gb simulation replicates and evaluates DAIseg 
 
 `launch.2d.daiseg.sh` runs multiple seeds. For each seed, it sets `SIM_NAME=2d.daiseg.seedN` and `BASE_SEED`, then launches `2d.daiseg.sh`.
 
-`2d.daiseg.sh` runs the full per-seed pipeline: simulation, DAIseg input preparation, DAIseg inference, and evaluation for each `(modern_ref, nd_ref)` grid point.
-
+`2d.daiseg.sh` runs the full per-seed pipeline: simulation, DAIseg input preparation, DAIseg inference, and evaluation for each `(modern_ref, nd_ref)` grid point. 
 Per-seed metrics are written to:
 
 ```text
