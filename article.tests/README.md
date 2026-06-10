@@ -65,8 +65,6 @@ The default simulation name is:
 ```text
 test.3.methods.sh
 ├── simulate_mexicans.py
-│   └── comparison.3.methods/raw/truth.all.tsv
-│ 
 ├── prepare_rfmix.py
 ├── run_rfmix.py
 ├── prepare_hmmix.py
@@ -76,29 +74,30 @@ test.3.methods.sh
 ├── prepare_daiseg_mexicans.py
 ├── run_daiseg_mexicans.py
 ├── combine_predictions.py
-│   ├── rfmix_hmmix
-│   └── rfmix_daiseg_simple
-│ 
-├── evaluate_methods.py
-│   ├── rfmix_hmmix
-│   ├── rfmix_daiseg_simple
-│   └── daiseg_mexicans
-│ 
-└── comparison.3.methods/
-    ├── raw/truth.all.tsv
-    │ 
-    ├── runs/
-    │   ├── rfmix_hmmix/
-    │   ├── rfmix_daiseg_simple/
-    │   └── daiseg_mexicans/
-    │ 
-    └── metrics/
-        ├── rfmix_hmmix/
-        │   └── summary.rfmix.eu*.na*.af*__hmmix.af*.thr*.json
-        │ 
-        ├── rfmix_daiseg_simple/
-        │   └── summary.rfmix.eu*.na*.af*__simple.af*.nd*.json
-        │ 
-        └── daiseg_mexicans/
-            └── summary.ref.eu*.na*.af*.nd*.json
+└── evaluate_methods.py
+
+outputs:
+
+simulate_mexicans.py
+→ comparison.3.methods/raw/truth.all.tsv
+
+run_rfmix.py
+→ comparison.3.methods/runs/rfmix/
+
+run_hmmix.py
+→ comparison.3.methods/runs/hmmix/
+
+combine_predictions.py rfmix_hmmix
+→ comparison.3.methods/runs/rfmix_hmmix/
+
+combine_predictions.py rfmix_daiseg_simple
+→ comparison.3.methods/runs/rfmix_daiseg_simple/
+
+run_daiseg_mexicans.py
+→ comparison.3.methods/runs/daiseg_mexicans/
+
+evaluate_methods.py
+→ comparison.3.methods/metrics/rfmix_hmmix/
+→ comparison.3.methods/metrics/rfmix_daiseg_simple/
+→ comparison.3.methods/metrics/daiseg_mexicans/
 ```
