@@ -81,6 +81,7 @@ test.3.methods.sh
 │   ├── rfmix_hmmix
 │   ├── rfmix_daiseg_simple
 │   └── daiseg_mexicans
+│ 
 └── comparison.3.methods/
     ├── raw/truth.all.tsv
     ├── runs/
