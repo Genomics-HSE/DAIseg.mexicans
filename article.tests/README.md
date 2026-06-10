@@ -54,8 +54,7 @@ Each run simulates 60 chromosomes of 50 Mb, giving 3 Gb of sequence, and evaluat
 
 `test.3.methods.sh` runs the full comparison pipeline for one simulation replicate.
 
-It first simulates the dataset, then runs RFMix, HMMix, DAIseg.simple, and DAIseg.mexicans. Combined predictions are evaluated with `evaluate_methods.py`.
-
+It first simulates the dataset, then runs RFMix, HMMix, DAIseg.simple, and DAIseg.mexicans. Combined predictions are evaluated with `evaluate_methods.py`. 
 The default simulation name is:
 
 `comparison.3.methods`
