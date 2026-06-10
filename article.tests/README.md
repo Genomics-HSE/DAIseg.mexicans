@@ -66,6 +66,7 @@ The default simulation name is:
 test.3.methods.sh
 ├── simulate_mexicans.py
 │   └── comparison.3.methods/raw/truth.all.tsv
+│ 
 ├── prepare_rfmix.py
 ├── run_rfmix.py
 ├── prepare_hmmix.py
@@ -77,6 +78,7 @@ test.3.methods.sh
 ├── combine_predictions.py
 │   ├── rfmix_hmmix
 │   └── rfmix_daiseg_simple
+│ 
 ├── evaluate_methods.py
 │   ├── rfmix_hmmix
 │   ├── rfmix_daiseg_simple
@@ -84,15 +86,19 @@ test.3.methods.sh
 │ 
 └── comparison.3.methods/
     ├── raw/truth.all.tsv
+    │ 
     ├── runs/
     │   ├── rfmix_hmmix/
     │   ├── rfmix_daiseg_simple/
     │   └── daiseg_mexicans/
+    │ 
     └── metrics/
         ├── rfmix_hmmix/
         │   └── summary.rfmix.eu*.na*.af*__hmmix.af*.thr*.json
+        │ 
         ├── rfmix_daiseg_simple/
         │   └── summary.rfmix.eu*.na*.af*__simple.af*.nd*.json
+        │ 
         └── daiseg_mexicans/
             └── summary.ref.eu*.na*.af*.nd*.json
 ```
