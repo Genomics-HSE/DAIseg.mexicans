@@ -11,89 +11,56 @@ The analysis has two parts:
 1. test how performance changes across the `(modern_ref, nd_ref)` grid;
 2. test whether performance depends on the length of the true tract.
 
-## Scripts
+## Scripts and file flow
 
 ### `launch.2d.daiseg.sh`
 
 Runs multiple simulation seeds.
 
-For each seed, it sets:
+For each seed, it sets `SIM_NAME=2d.daiseg.seedN` and `BASE_SEED`, then launches:
 
-```text
-SIM_NAME=2d.daiseg.seedN
-BASE_SEED
-````
-
-and launches:
-
-```text
-2d.daiseg.sh
-```
+`launch.2d.daiseg.sh` → `2d.daiseg.sh`
 
 ### `2d.daiseg.sh`
 
 Runs the full pipeline for one seed:
 
-```text
-simulate data
-prepare DAIseg inputs
-run DAIseg
-evaluate predictions
-collect per-seed grid metrics
-```
+`simulate data` → `prepare DAIseg inputs` → `run DAIseg` → `evaluate predictions` → `collect per-seed grid metrics`
 
-Main output:
+Main per-seed output:
 
-```text
-2d.daiseg.seedN/metrics/daiseg_mexicans/grid_metrics.long.tsv
-```
+`2d.daiseg.sh` → `2d.daiseg.seedN/metrics/daiseg_mexicans/grid_metrics.long.tsv`
 
 ### `collect.2d.runs.py`
 
-Parses completed seed folders using:
+Combines grid metrics across completed seeds:
 
-```text
-2d.daiseg.seed*/metrics/daiseg_mexicans/grid_metrics.long.tsv
-```
+`2d.daiseg.seed*/metrics/daiseg_mexicans/grid_metrics.long.tsv` → `all_runs.long.tsv`
 
-Combines per-seed results into:
+Then it averages precision and recall across seeds and writes:
 
-```text
-all_runs.long.tsv
-```
-
-Final outputs:
-
-```text
-archaic.tileplot.pdf
-modern.tileplot.pdf
-```
+`collect.2d.runs.py` → `archaic.tileplot.pdf`  
+`collect.2d.runs.py` → `modern.tileplot.pdf`
 
 ### `eval_len_bin.py`
 
-Uses the same `2d.daiseg.seedN` folders, but analyzes only one grid point:
+Runs a length-stratified analysis for one grid point:
 
-```text
-ref.eu250.na250.af250.nd3
-```
+`ref.eu250.na250.af250.nd3`
 
 For each seed, it compares:
 
-```text
-2d.daiseg.seedN/raw/truth.all.tsv
-```
-
-with:
-
-```text
-2d.daiseg.seedN/runs/daiseg_mexicans/ref.eu250.na250.af250.nd3/all.inferred.daiseg_mexicans.em.tsv
-```
+`2d.daiseg.seedN/raw/truth.all.tsv`  
+with  
+`2d.daiseg.seedN/runs/daiseg_mexicans/ref.eu250.na250.af250.nd3/all.inferred.daiseg_mexicans.em.tsv`
 
 The goal is to evaluate performance by true tract length.
 
-Output directory:
+Main output:
 
-```text
-length_bin_analysis.ref250.nd3
-```
+`eval_len_bin.py` → `length_bin_analysis.ref250.nd3/length_bin_confusion.mean_across_runs.pdf`
 
+Additional outputs:
+
+`eval_len_bin.py` → `length_bin_analysis.ref250.nd3/length_bin_summary.json`  
+`eval_len_bin.py` → `length_bin_analysis.ref250.nd3/mean_confusion_*.txt`
