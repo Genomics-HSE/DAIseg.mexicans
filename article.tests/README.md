@@ -36,3 +36,56 @@ collect.2d.runs.py
 analysis_utils.py
 ├── plot.confusion.py → confusion.selected.grid.pdf
 └── eval_len_bin.py → length_bin_analysis.ref250.nd3/length_bin_confusion.mean_across_runs.pdf
+
+# Three-method comparison benchmark
+
+## Goal
+
+This benchmark compares three approaches on the same whole-genome-scale simulation replicate.
+
+Each run simulates 60 chromosomes of 50 Mb, giving 3 Gb of sequence, and evaluates:
+
+1. `RFMix + HMMix`
+2. `RFMix + DAIseg.simple`
+3. `DAIseg.mexicans`
+
+## Scripts
+
+`test.3.methods.sh` runs the full comparison pipeline for one simulation replicate.
+
+It first simulates the dataset, then runs RFMix, HMMix, DAIseg.simple, and DAIseg.mexicans. Combined predictions are evaluated with `evaluate_methods.py`.
+
+The default simulation name is:
+
+`comparison.3.methods`
+
+## File dependency tree
+
+```text
+test.3.methods.sh
+└── simulate_mexicans.py
+    └── comparison.3.methods/
+        ├── raw/truth.all.tsv
+        ├── rfmix/
+        │   └── RFMix outputs
+        ├── hmmix/
+        │   └── HMMix outputs
+        ├── runs/
+        │   ├── rfmix_hmmix/
+        │   ├── rfmix_daiseg_simple/
+        │   └── daiseg_mexicans/
+        └── metrics/
+            ├── rfmix_hmmix/
+            │   └── summary.rfmix.eu*.na*.af*__hmmix.af*.thr*.json
+            ├── rfmix_daiseg_simple/
+            │   └── summary.rfmix.eu*.na*.af*__simple.af*.nd*.json
+            └── daiseg_mexicans/
+                └── summary.ref.eu*.na*.af*.nd*.json
+
+Main outputs
+
+test.3.methods.sh prints final accuracy summaries for all evaluated methods.
+
+The detailed evaluation files are written under:
+
+comparison.3.methods/metrics/
