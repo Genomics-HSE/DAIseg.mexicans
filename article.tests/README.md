@@ -135,15 +135,17 @@ evaluate_methods.py → test.em/metrics/daiseg_mexicans/
 
 ## Goal
 
-This benchmark evaluates DAIseg.mexicans under empirical modern and Neanderthal callability masks. It simulates chromosomes 1--22 using human autosomal lengths, applies 1000 Genomes modern callability masks and Neanderthal masks, runs masked inference, and then evaluates archaic-state recovery as a function of callability.
+This benchmark evaluates DAIseg.mexicans under empirical modern and Neanderthal callability masks. It simulates chromosomes 1--22 using human autosomal lengths, applies 1000 Genomes modern callability masks and Neanderthal masks, runs masked inference, and evaluates archaic-state recovery under different post-inference callability filters.
 
-The analysis has two parts: simulation/inference under different Neanderthal-mask regimes, and a callability-stratified heatmap for the `pooled_union` regime.
+The analysis has three parts: simulation and masked inference, post-inference filtering for the `pooled_union` regime, and a callability-stratified precision/recall heatmap.
 
 ## Scripts
 
-`experiment.with.mask.py` runs the full benchmark pipeline: simulation, five-state truth extraction, masked observation construction, EM/Viterbi inference, and metric collection.
+`experiment.with.mask.py` runs the full simulation and inference pipeline. It simulates chromosomes, extracts five-state truth, constructs masked observations, runs EM/Viterbi decoding, and writes truth, prediction, confusion, and summary files.
 
-`stratify_callability.py` is a post-processing script. It reads the truth and `predictions.pooled_union.tsv`, computes window-level modern callability and Neanderthal union coverage, and plots archaic precision and recall across callability bins.
+`grid_pooled_union_filter.py` performs the post-inference filtering grid for the `pooled_union` regime. It reads `predictions.pooled_union.tsv` and the chromosome-level truth files, applies thresholds on modern callability \(L_{\mathrm{mod}}\) and Neanderthal union coverage \(U_{\mathrm{ND}}=L_{\mathrm{arch}}/L_{\mathrm{mod}}\), and writes the filtering-grid summary used for the main callability-filter table.
+
+`stratify_callability.py` is a post-processing script for the heatmap. It reads the generated truth and `predictions.pooled_union.tsv`, recomputes \(L_{\mathrm{mod}}\) and \(U_{\mathrm{ND}}\), and plots archaic precision and recall across callability bins.
 
 ## File dependency tree
 
@@ -165,6 +167,18 @@ experiment.with.mask.py
             ├── binary_arch_report.<regime>.json
             └── summary.tsv
 
+grid_pooled_union_filter.py
+├── reads  → masked_matrix_all/ground_truth_5state_chr*_seed_*.tsv
+├── reads  → masked_matrix_all/predictions.pooled_union.tsv
+├── reads  → 1000 Genomes modern callability masks
+├── reads  → genomic gap mask
+├── reads  → Vindija / Altai / Chagyrskaya Neanderthal masks
+└── writes → masked_matrix_all/pooled_union_filter_grid/
+            ├── pooled_union_filter_grid_summary.tsv
+            ├── callable_space.lmod_*.union_*.tsv
+            ├── confusion.lmod_*.union_*.txt
+            └── class_report.lmod_*.union_*.json
+
 stratify_callability.py
 ├── reads  → masked_matrix_all/ground_truth_5state_chr*_seed_*.tsv
 ├── reads  → masked_matrix_all/predictions.pooled_union.tsv
@@ -174,6 +188,8 @@ stratify_callability.py
 └── writes → masked_matrix_all/archaic_precision_recall_by_callability.png
           → masked_matrix_all/archaic_precision_recall_by_callability.pdf
 ````
+
+
 
 
 
