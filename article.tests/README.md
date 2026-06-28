@@ -189,9 +189,59 @@ stratify_callability.py
           → masked_matrix_all/archaic_precision_recall_by_callability.pdf
 ````
 
+## How to run
 
+Run the empirical callability-mask benchmark in three steps.
 
+### 1. Simulation and masked inference
 
+```bash
+python experiment.with.mask.py \
+  --yaml PATH/TO/demography.yaml \
+  --chrom_lengths /home/share/human.data/ref.fa/hg19.chr.lengths/hg19.chrom.len \
+  --modern_dir /home/share/human.data/1000GP/1000GP.grch37/bed \
+  --gaps_file /home/share/human.data/ref.fa/gaps.grch37/gap.renamed.txt \
+  --vindija_dir /home/share/human.data/neand/33.19/bed \
+  --altai_dir /home/share/human.data/neand/altai/bed \
+  --chagyr_dir /home/share/human.data/neand/Chagyrskaya/bed \
+  --out_dir masked_matrix_all \
+  --base_seed 1234567 \
+  --n_threads 8 \
+  --resimulate true
+```
 
+Use `--resimulate false` to reuse existing `.trees` and truth files.
+
+### 2. Post-inference filtering grid
+
+```bash
+python grid_pooled_union_filter.py \
+  --chrom_lengths /home/share/human.data/ref.fa/hg19.chr.lengths/hg19.chrom.len \
+  --modern_dir /home/share/human.data/1000GP/1000GP.grch37/bed \
+  --gaps_file /home/share/human.data/ref.fa/gaps.grch37/gap.renamed.txt \
+  --vindija_dir /home/share/human.data/neand/33.19/bed \
+  --altai_dir /home/share/human.data/neand/altai/bed \
+  --chagyr_dir /home/share/human.data/neand/Chagyrskaya/bed \
+  --out_dir masked_matrix_all \
+  --base_seed 1234567
+```
+
+This writes:
+
+```text
+masked_matrix_all/pooled_union_filter_grid/pooled_union_filter_grid_summary.tsv
+```
+
+### 3. Callability-stratified heatmap
+
+```bash
+python stratify_callability.py
+```
+
+This writes:
+
+```text
+masked_matrix_all/archaic_precision_recall_by_callability.pdf
+```
 
 
