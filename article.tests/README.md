@@ -129,3 +129,53 @@ simulate_mexicans.py → test.em/raw/truth.all.tsv
 run_daiseg_mexicans.py → test.em/runs/daiseg_mexicans/
 evaluate_methods.py → test.em/metrics/daiseg_mexicans/
 ```
+
+
+# Empirical callability-mask benchmark
+
+## Goal
+
+This benchmark evaluates DAIseg.mexicans under empirical modern and Neanderthal callability masks. It simulates chromosomes 1--22 using human autosomal lengths, applies 1000 Genomes modern callability masks and Neanderthal masks, runs masked inference, and then evaluates archaic-state recovery as a function of callability.
+
+The analysis has two parts: simulation/inference under different Neanderthal-mask regimes, and a callability-stratified heatmap for the `pooled_union` regime.
+
+## Scripts
+
+`experiment.with.mask.py` runs the full benchmark pipeline: simulation, five-state truth extraction, masked observation construction, EM/Viterbi inference, and metric collection.
+
+`stratify_callability.py` is a post-processing script. It reads the truth and `predictions.pooled_union.tsv`, computes window-level modern callability and Neanderthal union coverage, and plots archaic precision and recall across callability bins.
+
+## File dependency tree
+
+```text
+experiment.with.mask.py
+├── reads  → demographic model YAML
+├── reads  → chromosome lengths
+├── reads  → 1000 Genomes modern callability masks
+├── reads  → genomic gap mask
+├── reads  → Vindija / Altai / Chagyrskaya Neanderthal masks
+└── writes → masked_matrix_all/
+            ├── sim_chr*_seed_*.trees
+            ├── ground_truth_5state_chr*_seed_*.tsv
+            ├── ground_truth_5state.all.tsv
+            ├── predictions.<regime>.tsv
+            ├── predictions.pooled_union.tsv
+            ├── confusion.<regime>.txt
+            ├── class_report.<regime>.json
+            ├── binary_arch_report.<regime>.json
+            └── summary.tsv
+
+stratify_callability.py
+├── reads  → masked_matrix_all/ground_truth_5state_chr*_seed_*.tsv
+├── reads  → masked_matrix_all/predictions.pooled_union.tsv
+├── reads  → 1000 Genomes modern callability masks
+├── reads  → genomic gap mask
+├── reads  → Vindija / Altai / Chagyrskaya Neanderthal masks
+└── writes → masked_matrix_all/archaic_precision_recall_by_callability.png
+          → masked_matrix_all/archaic_precision_recall_by_callability.pdf
+````
+
+
+
+
+
