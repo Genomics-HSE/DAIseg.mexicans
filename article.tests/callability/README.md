@@ -5,9 +5,9 @@ DAIseg under modern-human and Neanderthal genomic masks. The analysis uses
 chromosomes 1--22, the 1000 Genomes strict mask, genomic gaps, and the union of
 the Vindija, Altai, and Chagyrskaya Neanderthal masks.
 
-The modern-callability fraction in window \(t\) is
-\(\rho_{\mathrm{mod},t}=L_{\mathrm{mod},t}/L\). Neanderthal union coverage is
-\(U_{\mathrm{ND},t}=L_{\mathrm{arch},t}/L_{\mathrm{mod},t}\).
+The modern-callability fraction in window $t$ is
+$\rho_{\mathrm{mod},t}=L_{\mathrm{mod},t}/L$. Neanderthal union coverage is
+$U_{\mathrm{ND},t}=L_{\mathrm{arch},t}/L_{\mathrm{mod},t}$.
 
 ## Files
 
@@ -36,6 +36,10 @@ PYTHONPATH="$HOME/DAIseg.mexicans" python experiment.with.mask.py \
   --out_dir masked_matrix_all \
   --base_seed 1234567 \
   --n_threads 8 \
+  --ref_eu_diploids 107 \
+  --ref_na_diploids 85 \
+  --ref_af_diploids 108 \
+  --ref_nd_diploids 3 \
   --resimulate true
 ```
 
