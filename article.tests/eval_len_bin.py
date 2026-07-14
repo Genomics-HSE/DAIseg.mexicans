@@ -132,7 +132,7 @@ def plot_results(
     fig.suptitle(
         (
             "Length-stratified confusion analysis "
-            f"(ref={MODERN_REF}, nd={ND_REF})"
+            f"(pooled across runs; ref={MODERN_REF}, nd={ND_REF})"
         ),
         y=0.98,
     )
@@ -220,12 +220,10 @@ def main() -> None:
             conf2 = collapse_to_binary(conf5)
 
             bin_conf5_row[bin_name].append(
-                row_normalize(conf5)
+                conf5
             )
 
-            bin_binary_metrics[bin_name].append(
-                binary_metrics(conf2)
-            )
+            bin_binary_metrics[bin_name].append(conf2)
 
         completed_runs += 1
         print(f"[ok] run={run}")
@@ -242,27 +240,26 @@ def main() -> None:
             axis=0,
         )
 
-        recalls = [
-            metrics["recall"]
-            for metrics in bin_binary_metrics[bin_name]
-        ]
+        binary_stack = np.stack(
+            bin_binary_metrics[bin_name],
+            axis=0,
+        )
 
-        precisions = [
-            metrics["precision"]
-            for metrics in bin_binary_metrics[bin_name]
-        ]
+        binary_stats = binary_metrics(
+            binary_stack.sum(axis=0)
+        )
 
         summary[bin_name] = {
             "binary_recall_mean": float(
-                np.mean(recalls)
+                binary_stats["recall"]
             ),
             "binary_precision_mean": float(
-                np.mean(precisions)
+                binary_stats["precision"]
             ),
         }
 
         mean_rownorm_5x5[bin_name] = (
-            row_stack.mean(axis=0)
+            row_normalize(row_stack.sum(axis=0))
         )
 
     plot_results(
