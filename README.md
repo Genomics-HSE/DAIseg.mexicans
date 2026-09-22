@@ -5,9 +5,17 @@ Highly accurate method for detecting archaic segments in the modern admixed geno
 ![Demography](https://github.com/Genomics-HSE/DAIseg.mex/blob/main/Mex.svg)
 
 
+The simplest version of 
+```bash
+nohup python3 daiseg.py run.with.EM \
+  -json /path/to/configs/MXL.grch38.chr{1..22}.json \
+  > daiseg.log 2>&1 &
+```
+
+
 
 <details>
-<summary>Example configuration: DAIseg.mexicans (GRCh38, chr1)</summary>
+<summary>Example configuration .json: DAIseg-m (GRCh38, chr1)</summary>
 
 ```json
 {
