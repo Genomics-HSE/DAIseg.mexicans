@@ -5,12 +5,13 @@ Highly accurate method for detecting archaic segments in the modern admixed geno
 ![Demography](https://github.com/Genomics-HSE/DAIseg.mex/blob/main/Mex.svg)
 
 
-The simplest version of 
+The simplest command to run DAIseg-m
 ```bash
 nohup python3 daiseg.py run.with.EM \
   -json /path/to/configs/MXL.grch38.chr{1..22}.json \
   > daiseg.log 2>&1 &
 ```
+where .json is configuration file. 
 
 
 
@@ -152,5 +153,7 @@ nohup python3 daiseg.py run.with.EM \
   "gaps": "/path/to/data/ref.fa/gaps.grch38/gap.txt"
 }
 ```
+
+
 
 </details>
