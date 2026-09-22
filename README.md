@@ -20,9 +20,7 @@ python daiseg.py main.prep -json $json -threads 16
 
 The simplest command to run DAIseg-m
 ```bash
-nohup python3 daiseg.py run.with.EM \
-  -json $json \
-  > daiseg.log 2>&1 &
+nohup python3 daiseg.py run.with.EM  -json $json > daiseg.log 2>&1 &
 ```
 where .json is configuration file. 
 
