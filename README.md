@@ -2,7 +2,7 @@
 Highly accurate method for detecting archaic segments in the modern admixed genomes 
 
 
-![Demography](https://github.com/Genomics-HSE/DAIseg.mexicans/blob/main/Mex.svg)
+![Demography](https://github.com/Genomics-HSE/DAIseg.mexicans/blob/main/Mexicans.svg)
 
 ```bash
 echo "  Step 1: restrict_1kG"
