@@ -5,6 +5,7 @@ Highly accurate method for detecting archaic segments in the modern admixed geno
 ![Demography](https://github.com/Genomics-HSE/DAIseg.mex/blob/main/Mex.svg)
 
 
+
 <details>
 <summary>Example configuration: DAIseg.mexicans (GRCh38, chr1)</summary>
 
@@ -13,34 +14,34 @@ Highly accurate method for detecting archaic segments in the modern admixed geno
   "description": "DAIseg.mexicans configuration to run",
   "CHROM": "chr1",
   "output": "MXL.grch38.chr1",
-  "prefix": "/home/ailina/MXL.grch38.v2",
+  "prefix": "/path/to/output/MXL.grch38.v2",
   "files": {
     "neand_files": {
       "Vindija33.19": {
-        "bed": "/home/share/human.data/neand/33.19.grch38/bed/chr1_mask.bed.gz",
-        "vcf": "/home/share/human.data/neand/33.19.grch38/chr1.vcf.gz"
+        "bed": "/path/to/data/neand/33.19.grch38/bed/chr1_mask.bed.gz",
+        "vcf": "/path/to/data/neand/33.19.grch38/chr1.vcf.gz"
       },
       "Altai": {
-        "bed": "/home/share/human.data/neand/altai.grch38/bed/chr1_mask.bed.gz",
-        "vcf": "/home/share/human.data/neand/altai.grch38/chr1.vcf.gz"
+        "bed": "/path/to/data/neand/altai.grch38/bed/chr1_mask.bed.gz",
+        "vcf": "/path/to/data/neand/altai.grch38/chr1.vcf.gz"
       },
       "Chagyrskaya-Phalanx": {
-        "bed": "/home/share/human.data/neand/Chagyrskaya.grch38/bed/chr1_mask.bed.gz",
-        "vcf": "/home/share/human.data/neand/Chagyrskaya.grch38/chr1.vcf.gz"
+        "bed": "/path/to/data/neand/Chagyrskaya.grch38/bed/chr1_mask.bed.gz",
+        "vcf": "/path/to/data/neand/Chagyrskaya.grch38/chr1.vcf.gz"
       }
     },
     "1000GP_files": {
-      "bed": "/home/share/human.data/1000GP/1000GP.grch38/bed/chr1.clean.bed",
+      "bed": "/path/to/data/1000GP/1000GP.grch38/bed/chr1.clean.bed",
       "vcf": "1kG_filtered.chr1.grch38.bcf",
-      "vcf_initial": "/home/share/human.data/1000GP/1000GP.grch38/CCDG_14151_B01_GRM_WGS_2020-08-05_chr1.filtered.shapeit2-duohmm-phased.vcf.gz"
+      "vcf_initial": "/path/to/data/1000GP/1000GP.grch38/CCDG_14151_B01_GRM_WGS_2020-08-05_chr1.filtered.shapeit2-duohmm-phased.vcf.gz"
     },
     "ancestral": {
-      "fasta": "/home/share/human.data/Anc.fa/homo_sapiens_ancestor_GRCh38/homo_sapiens_ancestor_1.fa"
+      "fasta": "/path/to/data/Anc.fa/homo_sapiens_ancestor_GRCh38/homo_sapiens_ancestor_1.fa"
     },
     "reference": {
-      "fasta": "/home/share/human.data/ref.fa/grch38.fasta/GRCh38_full_analysis_set_plus_decoy_hla.fa"
+      "fasta": "/path/to/data/ref.fa/grch38.fasta/GRCh38_full_analysis_set_plus_decoy_hla.fa"
     },
-    "chr_lengths": "/home/share/human.data/ref.fa/grch38.lengths/hg38.chrom.sizes"
+    "chr_lengths": "/path/to/data/ref.fa/grch38.lengths/hg38.chrom.sizes"
   },
   "samples": {
     "Africans": [
@@ -140,7 +141,7 @@ Highly accurate method for detecting archaic segments in the modern admixed geno
     "Nd_1k_genomes": "coverage_1kG.nd.chr1.grch38.bed"
   },
   "data": "prep.chr1.grch38.tsv",
-  "gaps": "/home/share/human.data/ref.fa/gaps.grch38/gap.txt"
+  "gaps": "/path/to/data/ref.fa/gaps.grch38/gap.txt"
 }
 ```
 
