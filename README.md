@@ -5,13 +5,13 @@ Highly accurate method for detecting archaic segments in the modern admixed geno
 ![Demography](https://github.com/Genomics-HSE/DAIseg.mex/blob/main/Mex.svg)
 
 ```bash
-echo "  Step 1: restrict_1kG" && \
+echo "  Step 1: restrict_1kG"
 python daiseg.py restrict_1kG -json $json -threads 16 
 
-echo "  Step 2: callability" && \
+echo "  Step 2: callability"
 python daiseg.py callability -json $json -threads 16  
 
-echo "  Step 3: main.prep" && \
+echo "  Step 3: main.prep" 
 python daiseg.py main.prep -json $json -threads 16 
 
 ```
