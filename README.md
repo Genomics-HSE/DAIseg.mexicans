@@ -4,6 +4,10 @@ Highly accurate method for detecting archaic segments in the modern admixed geno
 
 ![Demography](https://github.com/Genomics-HSE/DAIseg.mexicans/blob/main/Mexicans.svg)
 
+
+
+
+Three commands to work with 1000 GP data
 ```bash
 echo "  Step 1: restrict_1kG"
 python daiseg.py restrict_1kG -json $json -threads 16 
@@ -15,7 +19,6 @@ echo "  Step 3: main.prep"
 python daiseg.py main.prep -json $json -threads 16 
 
 ```
-
 
 
 The simplest command to run DAIseg-m
